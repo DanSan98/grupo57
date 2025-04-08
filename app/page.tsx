@@ -123,14 +123,14 @@ export default function Page() {
       {/* Empresas */}
       <section id="companies" className="py-20 bg-black">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          <CompanyCard logo="/images/gas57.png" name="GAS 57" link="https://express57.mx/" />
-          <CompanyCard logo="/images/express.png" name="EXPRESS 57" link="https://express57.mx/" />
-          <CompanyCard logo="/images/integsa.png" name="INTEGSA" link="https://es.integsa.com/" />
-          <CompanyCard logo="/images/gastraker.png" name="GAS TRAKER" link="http://www.gas-tracker.com.mx/" />
-          <CompanyCardNoLink logo="/images/drula.png" name="DRULA CONSTRUCTORA" />
-          <CompanyCardNoLink logo="/images/imob57.png" name="INMOBILIARIA 57" />
+          <CompanyCard logo="/images/gas57.png" name="GAS 57" link="https://express57.mx/" logoSize={128} logoOffset={10} />
+          <CompanyCard logo="/images/express.png" name="EXPRESS 57" link="https://express57.mx/" logoSize={200} logoOffset={25} />
+          <CompanyCard logo="/images/integsa.png" name="INTEGSA" link="https://es.integsa.com/" logoSize={150} logoOffset={5} />
+          <CompanyCard logo="/images/gastraker.png" name="GAS TRAKER" link="http://www.gas-tracker.com.mx/" logoSize={100} logoOffset={10} />
+          <CompanyCardNoLink logo="/images/drula.png" name="DRULA CONSTRUCTORA" logoSize={180} logoOffset={30} />
+          <CompanyCardNoLink logo="/images/imob57.png" name="INMOBILIARIA 57" logoSize={160} logoOffset={50} />
           <div className="col-span-full flex justify-center">
-            <CompanyCardNoLink logo="/images/elquijote.png" name="EL QUIJOTE GROUP" />
+            <CompanyCardNoLink logo="/images/elquijote.png" name="EL QUIJOTE GROUP" logoSize={150} logoOffset={0} />
           </div>
         </div>
       </section>
@@ -159,33 +159,94 @@ export default function Page() {
 }
 
 // Cards
-function CompanyCard({ logo, name, link }: { logo: string; name: string; link: string }) {
+function CompanyCard({
+  logo,
+  name,
+  link,
+  logoSize = 128,
+  logoOffset = 0,
+}: {
+  logo: string;
+  name: string;
+  link: string;
+  logoSize?: number;
+  logoOffset?: number;
+}) {
   return (
-    <Card className="bg-white/5 border-white/10 hover:border-white/20 transform hover:scale-105 duration-300 transition-all flex flex-col items-center text-center h-full">
-      <CardContent className="p-6 flex flex-col items-center justify-between h-full">
-        <div className="w-32 h-32 flex items-center justify-center mb-4">
-          <Image src={logo} alt={name} width={128} height={128} className="object-contain" />
+    <Card className="bg-white/5 border-white/10 hover:border-white/20 transform hover:scale-105 transition-all flex flex-col text-center h-full">
+      <CardContent className="p-6 flex flex-col justify-between items-center h-full w-full">
+        <div
+          className="flex justify-center items-center"
+          style={{
+            height: 160,
+            marginBottom: "1.5rem",
+          }}
+        >
+          <div
+  style={{ transform: `translateY(${logoOffset}px)` }}
+  className="pointer-events-none"
+>
+  <Image
+    src={logo}
+    alt={name}
+    width={logoSize}
+    height={logoSize}
+    className="object-contain mx-auto relative z-20 pointer-events-none"
+  />
+</div>
+
         </div>
         <h3 className="text-xl font-semibold text-white mb-4">{name}</h3>
-        <Button asChild className="w-full mt-auto">
-          <Link href={link} target="_blank">Visitar Sitio</Link>
-        </Button>
+        <div className="w-full mt-auto">
+          <Button
+            asChild
+            className="w-full h-11 text-sm font-semibold px-4 py-2 leading-none bg-white/10 hover:bg-white/20 border border-white/20 text-white transition duration-300"
+          >
+            <Link href={link} target="_blank" rel="noopener noreferrer">
+              Visitar Sitio
+            </Link>
+          </Button>
+        </div>
       </CardContent>
     </Card>
-  )
+  );
 }
 
-function CompanyCardNoLink({ logo, name }: { logo: string; name: string }) {
+function CompanyCardNoLink({
+  logo,
+  name,
+  logoSize = 128,
+  logoOffset = 0,
+}: {
+  logo: string;
+  name: string;
+  logoSize?: number;
+  logoOffset?: number;
+}) {
   return (
-    <Card className="bg-white/5 border-white/10 hover:border-white/20 transform hover:scale-105 duration-300 transition-all flex flex-col items-center text-center h-full">
-      <CardContent className="p-6 flex flex-col items-center justify-between h-full">
-        <div className="w-32 h-32 flex items-center justify-center mb-4">
-          <Image src={logo} alt={name} width={128} height={128} className="object-contain" />
+    <Card className="bg-white/5 border-white/10 hover:border-white/20 transform hover:scale-105 transition-all flex flex-col text-center h-full">
+      <CardContent className="p-6 flex flex-col justify-between items-center h-full w-full">
+        <div
+          className="flex justify-center items-center"
+          style={{
+            height: 160,
+            marginBottom: "1.5rem",
+          }}
+        >
+          <div style={{ transform: `translateY(${logoOffset}px)` }}>
+            <Image
+              src={logo}
+              alt={name}
+              width={logoSize}
+              height={logoSize}
+              className="object-contain mx-auto"
+            />
+          </div>
         </div>
         <h3 className="text-xl font-semibold text-white mb-4">{name}</h3>
       </CardContent>
     </Card>
-  )
+  );
 }
 
 // Expandable card
@@ -208,7 +269,6 @@ function ExpandableCard({ title, description }: { title: string, description: st
     </li>
   )
 }
-
 
 // Contact detail
 function ContactDetail({ icon, label, value }: { icon: React.ReactNode, label: string, value: string }) {
